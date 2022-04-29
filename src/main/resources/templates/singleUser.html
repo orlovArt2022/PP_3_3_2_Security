@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:DA="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<head></head>
+<body>
+<h2>User Information</h2>
+<br/>
+Id is: <p th:text="${singleUser.getId()}"></p>
+<br/>
+Name is: <p th:text="${singleUser.getName()}"></p>
+<br/>
+Last Name is: <p th:text="${singleUser.getLastName()}"></p>
+<br/>
+Email is: <p th:text="${singleUser.getEmail()}"></p>
+
+Roles is/are <th:block  th:each= "role :${singleUser.getRoles()}">
+    <p th:utext="${role.getName()}">..</p>
+</th:block >
+
+<br/>
+<br/>
+<div sec:authorize="hasRole('ADMIN')">
+<a th:href="@{/admin}"> Back to User List</a>
+</div>
+<br/>
+<br/>
+<a th:href="@{/logout}"> Logout</a>
+</body>

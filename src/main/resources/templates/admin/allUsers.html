@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:DA="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title>USERS</title>
+</head>
+
+<body>
+
+<div sec:authorize="hasRole('USER')">
+<form th:method="GET" th:action="@{user/}">
+    <input type="submit" value="USER"/>
+</form>
+</div>
+<br/>
+<div sec:authorize="hasRole('ADMIN')">
+<form th:method="GET" th:action="@{user/}">
+    <input type="submit" value="ADMIN"/>
+</form>
+</div>
+
+<br/>
+<br/>
+<h2>User table</h2>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Roles</th>
+
+    </tr>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.email}"></td>
+        <th:block  th:each= "role :${user.getRoles()}">
+            <td th:utext="${role.getName()}">..</td>
+        </th:block >
+
+
+
+        <td>
+            <form th:method="GET" th:action="@{admin/edit/{id}(id = ${user.id})}">
+                <input type="submit" value="Edit"/>
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{admin/}">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <input type="submit" value="Delete"/></form>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{admin/{id}(id = ${user.id})}">
+                <input type="submit" value="Show User"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+<p><a th:href="@{admin/add}">Add new User</a></p>
+<br/>
+<br/>
+<a th:href="@{/logout}"> Logout</a>
+
+</body>
+</html>
