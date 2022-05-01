@@ -27,15 +27,15 @@
     <label for="Password">Enter password</label>
     <input type="text" th:field="*{password}" id="Password"/>
     <br/>
-    <label>Roles:
-        <input type="checkbox" name="roles"
-               th:each="role : ${allRoles}"
-               th:text="${role.name}"
-               th:value="${role.id}"
-               th:field="*{roles}"
-        />
-    </label>
-
+    <div>
+        <label>Roles:</label>
+        <select th:field="*{roles}" multiple>
+            <option th:each="role : ${allRoles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}">RED
+            </option>
+        </select>
+    </div>
     <br/>
     <br/>
     <input type="submit" value="Create new user"/>
